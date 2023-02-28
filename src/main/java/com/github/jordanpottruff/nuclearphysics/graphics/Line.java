@@ -1,6 +1,6 @@
-package com.github.jordanpottruiff.nuclearphysics.graphics;
+package com.github.jordanpottruff.nuclearphysics.graphics;
 
-import com.github.jordanpottruiff.nuclearphysics.common.Color;
+import com.github.jordanpottruff.nuclearphysics.common.Color;
 
 public class Line {
 

@@ -1,4 +1,4 @@
-package com.github.jordanpottruiff.nuclearphysics.common;
+package com.github.jordanpottruff.nuclearphysics.common;
 
 public class Color {
 

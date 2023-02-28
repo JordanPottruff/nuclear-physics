@@ -1,4 +1,4 @@
-package com.github.jordanpottruiff.nuclearphysics.graphics;
+package com.github.jordanpottruff.nuclearphysics.graphics;
 
 import com.google.common.collect.ImmutableSet;
 

@@ -1,11 +1,11 @@
-package com.github.jordanpottruiff.nuclearphysics;
+package com.github.jordanpottruff.nuclearphysics;
 
-import com.github.jordanpottruiff.nuclearphysics.common.Color;
-import com.github.jordanpottruiff.nuclearphysics.events.Event;
-import com.github.jordanpottruiff.nuclearphysics.events.EventQueue;
-import com.github.jordanpottruiff.nuclearphysics.graphics.Circle;
-import com.github.jordanpottruiff.nuclearphysics.graphics.Scene;
-import com.github.jordanpottruiff.nuclearphysics.graphics.WindowRenderer;
+import com.github.jordanpottruff.nuclearphysics.common.Color;
+import com.github.jordanpottruff.nuclearphysics.events.Event;
+import com.github.jordanpottruff.nuclearphysics.events.EventQueue;
+import com.github.jordanpottruff.nuclearphysics.graphics.Circle;
+import com.github.jordanpottruff.nuclearphysics.graphics.Scene;
+import com.github.jordanpottruff.nuclearphysics.graphics.WindowRenderer;
 import com.google.common.collect.ImmutableSet;
 
 public class Main {
@@ -42,7 +42,7 @@ public class Main {
                                  EventQueue queue, int i) {
         Circle a = new Circle(1 + i, 1 + i, 20, new Color(0.0, 0.0, 1.0));
         Color background = new Color(1.0, 0, 0);
-        queue.addEvent(5, new Event(() -> {
+        queue.addEvent(5, new Event((time) -> {
             windowRenderer
                     .render(new Scene(ImmutableSet.of(a), ImmutableSet.of()),
                             background);

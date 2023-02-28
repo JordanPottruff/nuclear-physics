@@ -1,4 +1,4 @@
-package com.github.jordanpottruiff.nuclearphysics.events;
+package com.github.jordanpottruff.nuclearphysics.events;
 
 import com.google.common.base.Stopwatch;
 
@@ -52,7 +52,7 @@ public class EventQueue {
                 locked = false;
                 timeMillis += deltaTime;
                 Stopwatch stopwatch = Stopwatch.createStarted();
-                nextEvent.getEvent().executeAction();
+                nextEvent.getEvent().getActionFn().accept(timeMillis);
                 doNextRecursively(stopwatch.elapsed(TimeUnit.MILLISECONDS));
             }, Math.max(deltaTime - executionDelay, 0), TimeUnit.MILLISECONDS);
         });
