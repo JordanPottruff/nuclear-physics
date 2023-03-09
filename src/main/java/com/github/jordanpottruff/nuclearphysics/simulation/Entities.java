@@ -10,12 +10,11 @@ import java.util.Map;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
-public class ImmutableEntities {
+public class Entities {
 
-    private final ImmutableSetMultimap<EntityKey<?>, Object> entityMap;
+    private final ImmutableSetMultimap<EntityType<?>, Object> entityMap;
 
-    private ImmutableEntities(
-            ImmutableSetMultimap<EntityKey<?>, Object> entityMap) {
+    private Entities(ImmutableSetMultimap<EntityType<?>, Object> entityMap) {
         this.entityMap = entityMap;
     }
 
@@ -27,11 +26,11 @@ public class ImmutableEntities {
         return new Builder(entityMap);
     }
 
-    public ImmutableList<Map.Entry<EntityKey<?>, Object>> getAll() {
+    public ImmutableList<Map.Entry<EntityType<?>, Object>> getAll() {
         return ImmutableList.copyOf(entityMap.entries());
     }
 
-    public <T> ImmutableList<T> get(EntityKey<T> key) {
+    public <T> ImmutableList<T> get(EntityType<T> key) {
         return entityMap.get(key).stream().map(key.getTypeKey()::cast)
                 .collect(toImmutableList());
     }
@@ -43,10 +42,10 @@ public class ImmutableEntities {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof ImmutableEntities)) {
+        if (!(other instanceof Entities)) {
             return false;
         }
-        ImmutableEntities otherCasted = (ImmutableEntities) other;
+        Entities otherCasted = (Entities) other;
         return entityMap.equals(otherCasted.entityMap);
     }
 
@@ -57,29 +56,28 @@ public class ImmutableEntities {
 
     public static class Builder {
 
-        final SetMultimap<EntityKey<?>, Object> entityMap;
+        final SetMultimap<EntityType<?>, Object> entityMap;
 
         public Builder() {
             entityMap = HashMultimap.create();
         }
 
-        private Builder(SetMultimap<EntityKey<?>, Object> entityMap) {
+        private Builder(SetMultimap<EntityType<?>, Object> entityMap) {
             this.entityMap = HashMultimap.create(entityMap);
         }
 
-        public <T> Builder add(EntityKey<T> key, T entity) {
+        public <T> Builder add(EntityType<T> key, T entity) {
             entityMap.put(key, entity);
             return this;
         }
 
-        public <T> Builder addAll(EntityKey<T> key, Collection<T> entities) {
+        public <T> Builder addAll(EntityType<T> key, Collection<T> entities) {
             entityMap.putAll(key, entities);
             return this;
         }
 
-        public ImmutableEntities build() {
-            return new ImmutableEntities(
-                    ImmutableSetMultimap.copyOf(entityMap));
+        public Entities build() {
+            return new Entities(ImmutableSetMultimap.copyOf(entityMap));
         }
     }
 }

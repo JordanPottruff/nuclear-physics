@@ -6,11 +6,11 @@ import java.util.Objects;
 public class SimulationChange {
 
     private final long timeDelay;
-    private final ImmutableEntities entitiesAdded;
-    private final ImmutableEntities entitiesRemoved;
+    private final Entities entitiesAdded;
+    private final Entities entitiesRemoved;
 
-    private SimulationChange(long timeDelay, ImmutableEntities entitiesAdded,
-                             ImmutableEntities entitiesRemoved) {
+    private SimulationChange(long timeDelay, Entities entitiesAdded,
+                             Entities entitiesRemoved) {
         this.timeDelay = timeDelay;
         this.entitiesAdded = entitiesAdded;
         this.entitiesRemoved = entitiesRemoved;
@@ -24,11 +24,11 @@ public class SimulationChange {
         return timeDelay;
     }
 
-    public ImmutableEntities getEntitiesAdded() {
+    public Entities getEntitiesAdded() {
         return entitiesAdded;
     }
 
-    public ImmutableEntities getEntitiesRemoved() {
+    public Entities getEntitiesRemoved() {
         return entitiesRemoved;
     }
 
@@ -58,12 +58,12 @@ public class SimulationChange {
     public static class Builder {
 
         private Long timeDelay;
-        private ImmutableEntities.Builder entitiesAdded;
-        private ImmutableEntities.Builder entitiesRemoved;
+        private Entities.Builder entitiesAdded;
+        private Entities.Builder entitiesRemoved;
 
         public Builder() {
-            entitiesAdded = ImmutableEntities.newBuilder();
-            entitiesRemoved = ImmutableEntities.newBuilder();
+            entitiesAdded = Entities.newBuilder();
+            entitiesRemoved = Entities.newBuilder();
         }
 
         public Builder setTimeDelay(long timeDelay) {
@@ -71,34 +71,34 @@ public class SimulationChange {
             return this;
         }
 
-        public Builder setEntitiesAdded(ImmutableEntities added) {
+        public Builder setEntitiesAdded(Entities added) {
             this.entitiesAdded = added.toBuilder();
             return this;
         }
 
-        public <T> Builder addEntity(EntityKey<T> key, T entity) {
+        public <T> Builder addEntity(EntityType<T> key, T entity) {
             entitiesAdded.add(key, entity);
             return this;
         }
 
-        public <T> Builder addEntities(EntityKey<T> key,
+        public <T> Builder addEntities(EntityType<T> key,
                                        Collection<T> entities) {
             entitiesAdded.addAll(key, entities);
             return this;
         }
 
-        public Builder setEntitiesRemoved(ImmutableEntities removed) {
+        public Builder setEntitiesRemoved(Entities removed) {
             this.entitiesRemoved = removed.toBuilder();
             return this;
         }
 
-        public <T> Builder removeEntities(EntityKey<T> key,
+        public <T> Builder removeEntities(EntityType<T> key,
                                           Collection<T> entities) {
             entitiesRemoved.addAll(key, entities);
             return this;
         }
 
-        public <T> Builder removeEntity(EntityKey<T> key, T entity) {
+        public <T> Builder removeEntity(EntityType<T> key, T entity) {
             entitiesRemoved.add(key, entity);
             return this;
         }

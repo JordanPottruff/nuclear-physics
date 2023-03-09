@@ -2,18 +2,18 @@ package com.github.jordanpottruff.nuclearphysics.simulation;
 
 import java.util.Objects;
 
-public class EntityKey<T> {
+public class EntityType<T> {
 
     private final Class<T> typeKey;
     private final String identifierKey;
 
-    private EntityKey(Class<T> typeKey, String identifierKey) {
+    private EntityType(Class<T> typeKey, String identifierKey) {
         this.typeKey = typeKey;
         this.identifierKey = identifierKey;
     }
 
-    public static <T> EntityKey<T> of(Class<T> typeKey, String identifierKey) {
-        return new EntityKey<>(typeKey, identifierKey);
+    public static <T> EntityType<T> of(Class<T> typeKey, String identifierKey) {
+        return new EntityType<>(typeKey, identifierKey);
     }
 
     public Class<T> getTypeKey() {
@@ -32,10 +32,10 @@ public class EntityKey<T> {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof EntityKey<?>)) {
+        if (!(other instanceof EntityType<?>)) {
             return false;
         }
-        EntityKey<?> otherCasted = (EntityKey<?>) other;
+        EntityType<?> otherCasted = (EntityType<?>) other;
         return typeKey.equals(otherCasted.typeKey) &&
                 identifierKey.equals(otherCasted.identifierKey);
     }

@@ -1,36 +1,46 @@
 package com.github.jordanpottruff.nuclearphysics.simulation;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.SetMultimap;
+import com.google.common.collect.*;
 
 import java.util.Collection;
-import java.util.Map;
+import java.util.HashMap;
 
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
 class SimulationState {
 
-    final SetMultimap<EntityKey<?>, Object> entityMap;
+    final SetMultimap<EntityType<?>, Object> typeToEntityMap;
+    final HashMap<Object, Long> entityToModifiedTimeMap;
 
     public SimulationState() {
-        entityMap = HashMultimap.create();
+        typeToEntityMap = HashMultimap.create();
+        entityToModifiedTimeMap = new HashMap<>();
     }
 
-    public ImmutableList<Map.Entry<EntityKey<?>, Object>> getAll() {
-        return ImmutableList.copyOf(entityMap.entries());
+    public ImmutableMultimap<EntityType<?>, Object> getAll() {
+        return ImmutableMultimap.copyOf(typeToEntityMap);
     }
 
-    public <T> ImmutableList<T> get(EntityKey<T> key) {
-        return entityMap.get(key).stream().map(key.getTypeKey()::cast)
+    public <T> ImmutableList<T> get(EntityType<T> key) {
+        return typeToEntityMap.get(key).stream().map(key.getTypeKey()::cast)
                 .collect(toImmutableList());
     }
 
-    public <T> void add(EntityKey<T> key, T entity) {
-        entityMap.put(key, entity);
+    public long getLastModifiedTime(Object entity) {
+        return entityToModifiedTimeMap.get(entity);
     }
 
-    public <T> void addAll(EntityKey<T> key, Collection<T> entities) {
-        entityMap.putAll(key, entities);
+    <T> void add(EntityType<T> key, T entity, long time) {
+        typeToEntityMap.put(key, entity);
+        entityToModifiedTimeMap.put(entity, time);
+    }
+
+    <T> void addAll(EntityType<T> key, Collection<T> entities, long time) {
+        typeToEntityMap.putAll(key, entities);
+        entities.forEach(entity -> entityToModifiedTimeMap.put(entity, time));
+    }
+
+    ImmutableSet<EntityType<?>> getTypes() {
+        return ImmutableSet.copyOf(typeToEntityMap.keySet());
     }
 }
